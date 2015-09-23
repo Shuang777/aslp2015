@@ -343,7 +343,7 @@
 %
 
 \author{Hang~Su,~\IEEEmembership{Student Member,~IEEE,}
-        Jim Hieronymus,~\IEEEmembership{Member,~IEEE}% <-this % stops a space
+        James Hieronymus,~\IEEEmembership{Member,~IEEE}% <-this % stops a space
 \thanks{H. Su is with the Department of Electrical Engineering and Computer Science,
 University of California, Berkeley, CA 94704, USA. e-mail: suhang3240@gmail.com}% <-this % stops a space
 \thanks{J. Hieronymus is with International Computer Science Institute.}}
@@ -420,156 +420,444 @@ Syllable, Lattice Transduction, Low-resource, Keyword Search
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
 
-
-
 \section{Introduction}
-% The very first letter is a 2 line initial drop letter followed
-% by the rest of the first word in caps.
-% 
-% form to use if the first word consists of a single letter:
-% \IEEEPARstart{A}{demo} file is ....
-% 
-% form to use if you need the single drop letter followed by
-% normal text (unknown if ever used by IEEE):
-% \IEEEPARstart{A}{}demo file is ....
-% 
-% Some journals put the first two words in caps:
-% \IEEEPARstart{T}{his demo} file is ....
-% 
-% Here we have the typical use of a "T" for an initial drop letter
-% and "HIS" in caps to complete the first word.
-\IEEEPARstart{T}{his} demo file is intended to serve as a ``starter file''
+\IEEEPARstart{N}{owadays}, keyword search in speech/audio is becoming more and more important as lots of multimedia are 
+available on the Internet. However, unlike text search, audio/speech search is a much harder task. Researchers 
+have been developing KWS systems based on speech recognition technology, which itself is an unsolved 
+artificial intelligence problem. Thanks to the progress made by the speech community, speech search is 
+becoming a more practical technique in recent years.
 
-\subsection{Subsection Heading Here}
-Subsection text here.
+Multilingual speech search presents a unique set of challenges, including novel speech sounds, agglomerative 
+morphology which causes large vocabularies, and lack of transcribed data for model training. 
+Especially, when training data is limited, there will be lots of out-of-vocabulary (OOV) words in the test 
+set that makes it impractical to search them without special treatment.
 
-% needed in second column of first page if using \IEEEpubid
-%\IEEEpubidadjcol
+The IARPA Babel program\cite{babel} instantiates this scenario well in providing a limited amount of 
+transcribed training data and lexicons for words and syllables in several minority languages. For the 
+languages provided so far the numbers of OOV keywords are from 10\% to 25\%. This report investigates 
+KWS in low-resources condition, with an emphasis on OOV issue.
 
-\subsubsection{Subsubsection Heading Here}
-Subsubsection text here.
+The organization of the report is as follows. Section 2 introduces the background of speech recognition and
+keyword search, together with two OOV handling methods. Section 3 illustrates the WFST framework for syllable
+transduction. Section 4 introduces the BABEL project and Section 5 presents experimental results on several 
+languages. Section 6 concludes this work.
 
+\section{Background}
+KWS in audio is usually based on speech recognition. A set of audio files and their corresponding 
+transcriptions are given as training data to bring up a speech recognizer. Test audio files are then 
+transcribed via Automatic Speech Recognition (ASR) and word lattices containing possible transcriptions 
+are generated (this procedure is called decoding). Keyword search is conducted based on the produced word lattices.
 
-% An example of a floating figure using the graphicx package.
-% Note that \label must occur AFTER (or within) \caption.
-% For figures, \caption should occur after the \includegraphics.
-% Note that IEEEtran v1.7 and later has special internal code that
-% is designed to preserve the operation of \label within \caption
-% even when the captionsoff option is in effect. However, because
-% of issues like this, it may be the safest practice to put all your
-% \label just after \caption rather than within \caption{}.
-%
-% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
-% option should be used if it is desired that the figures are to be
-% displayed while in draft mode.
-%
-%\begin{figure}[!t]
-%\centering
-%\includegraphics[width=2.5in]{myfigure}
-% where an .eps filename suffix will be assumed under latex, 
-% and a .pdf suffix will be assumed for pdflatex; or what has been declared
-% via \DeclareGraphicsExtensions.
-%\caption{Simulation results for the network.}
-%\label{fig_sim}
-%\end{figure}
+\subsection{WFST Framework for ASR}
+Speech recognition task could be well formulated as a composition task in the framework of weighted finite state 
+transducer (WFST). A typical WFST decoding graph generation in speech recognition\cite{mohri2008speech} is 
+represented as
+\begin{equation}
+H \circ C \circ L \circ G
+\end{equation}
+where $H$, $C$, $L$ and $G$ are WFSTs for a state network of triphone HMMs, context-dependency 
+transducer of phones, pronunciation lexicon for words, and an n-gram word LM, respectively; 
+$\circ$ represents the composition operator.
 
-% Note that IEEE typically puts floats only at the top, even when this
-% results in a large percentage of a column being occupied by floats.
+\subsection{Keyword search}
+Keyword search is usually done in three phases:
+\begin{itemize}
+\item Index generation. Given a list of keywords and word lattices, generate indexes for keywords that appear
+in word lattices.
+\item Score normalization. Normalize posterior scores (or other confidence scores) for each hypothesis
+in the index.
+\item System combination. Combine hypotheses from several different systems.
+\item Thresholding. Set thresholds for keywords and output searching results based on hypotheses and the thresholds.
+\end{itemize}
 
+There are two widely-used keyword search strategies for index generation. Both of them are based on decoded word
+lattices from ASR, but they use different searching algorithms.
 
-% An example of a double column floating figure using two subfigures.
-% (The subfig.sty package must be loaded for this to work.)
-% The subfigure \label commands are set within each subfloat command,
-% and the \label for the overall figure must come after \caption.
-% \hfil is used as a separator to get equal spacing.
-% Watch out that the combined width of all the subfigures on a 
-% line do not exceed the text width or a line break will occur.
-%
-%\begin{figure*}[!t]
-%\centering
-%\subfloat[Case I]{\includegraphics[width=2.5in]{box}%
-%\label{fig_first_case}}
-%\hfil
-%\subfloat[Case II]{\includegraphics[width=2.5in]{box}%
-%\label{fig_second_case}}
-%\caption{Simulation results for the network.}
-%\label{fig_sim}
-%\end{figure*}
-%
-% Note that often IEEE papers with subfigures do not employ subfigure
-% captions (using the optional argument to \subfloat[]), but instead will
-% reference/describe all of them (a), (b), etc., within the main caption.
-% Be aware that for subfig.sty to generate the (a), (b), etc., subfigure
-% labels, the optional argument to \subfloat must be present. If a
-% subcaption is not desired, just leave its contents blank,
-% e.g., \subfloat[].
+\subsubsection{WFST based indexation}
+Decoded lattices are converted into finite-state acceptors with posterior score, start time and end-time for 
+each word encoded as weights. An inverted index is then created from these individual acceptor, with paths to
+accept every possible word sequence in the original lattice. KWS is done via composition of keyword acceptors $K$
+and the inverted index, and posterior score, start time and end time for keywords could be obtained at the same
+time. Finally, a yes/no decision is made according to the posterior score from the search.
 
+\subsubsection{Word lattice based indexation}
+Decoded lattices are traversed and a word based index is created tracking all of the words that occur in the lattices.
+For single word keywords, a list of all the keyword occurrences is returned. For multiword keywords, one retrieve 
+the individual words from the index in the correct order with respect to their start and end times but discard occurrences
+where the time gap between adjacent words is bigger than a predefined threshold.
 
-% An example of a floating table. Note that, for IEEE style tables, the
-% \caption command should come BEFORE the table and, given that table
-% captions serve much like titles, are usually capitalized except for words
-% such as a, an, and, as, at, but, by, for, in, nor, of, on, or, the, to
-% and up, which are usually not capitalized unless they are the first or
-% last word of the caption. Table text will default to \footnotesize as
-% IEEE normally uses this smaller font for tables.
-% The \label must come after \caption as always.
-%
-%\begin{table}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-%\caption{An Example of a Table}
-%\label{table_example}
-%\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-%\begin{tabular}{|c||c|}
-%\hline
-%One & Two\\
-%\hline
-%Three & Four\\
-%\hline
-%\end{tabular}
-%\end{table}
+\subsection{Methods for OOV handling}
+OOV words are words in test set that does not appear in the training set. When an OOV word turns out to be 
+a keyword to be searched, standard searching pipeline on word lattices will not produce any hypotheses.
 
+One way to mitigate OOV issue is to find IV words which are closest in pronunciation to the OOV keywords. 
+Confusion matrices are used in \cite{lidia2014effi,chen2013using,li2000query,saraclar2013empirical} to 
+generate alternatives  words or string of words to stand as proxies for OOV keywords. These systems provide 
+a way of dealing with OOV keywords  which have a close IV keyword or series of IV keywords in the training data.
 
-% Note that the IEEE does not put floats in the very first column
-% - or typically anywhere on the first page for that matter. Also,
-% in-text middle ("here") positioning is typically not used, but it
-% is allowed and encouraged for Computer Society conferences (but
-% not Computer Society journals). Most IEEE journals/conferences use
-% top floats exclusively. 
-% Note that, LaTeX2e, unlike IEEE journals/conferences, places
-% footnotes above bottom floats. This can be corrected via the
-% \fnbelowfloat command of the stfloats package.
+Another way to handle OOV keywords is to use sub-word units. It is possible to use phones, syllables and
+morphs as subword units for representing OOV words. Subword index is created either by performing subword decoding
+\cite{bacchiani2005fast, yanzhang2014subword, bulyko2012subword} or by converting word lattice 
+into sub-word lattice\cite{karakos2014norm, saraclar2004lattice}. Hartmann et al. compares converting
+word-based lattices to subword lattices, separate decoding for each subword type and single decoding using all 
+possible subword units, reporting a best performance by carrying out a separate decoding for each subword 
+type \cite{hartmann2014comparing}.
 
+\subsubsection{Word Proxy}
+This approach tries to find IV word proxies which are closest in pronunciation to the OOV keywords. Let
+$K$ represent a finite-state acceptor for an OOV keyword, $L_2$ a finite state transducer for lexicon containing
+OOV keywords, $E$ be an edit-distance transducer that maps a phone sequence to another phone sequence with costs
+estimated from a phone confusion matrix, $L_1$ denote the pronunciation lexicon for IV words. The a proxy keyword
+$K'$ can be generated by
+\begin{equation}
+K'=Project(ShortestPath(K \circ L_2 \circ E \circ (L_1)^{-1}))
+\end{equation}
 
+$E$ is a phone to phone confusion matrix expressed in a finite-transducer form, estimated through standard 
+maximum likelihood estimation. Training data for the conditional probabilities estimation are collected by 
+aligning the reference phone string to the ASR hypothesis on a held-out set.
 
+\subsubsection{Subword Search}
+Direct search of OOV keywords in subword lattices serves as another baseline method. It follows the 
+pipeline in \cite{yanzhang2014subword}. Instead of doing mixed word and subword decoding, 
+we decode with subwords only (i.e. syllables) in this work. We create a syllable-based index from the lattices, 
+tracking all of the syllables that occur in the lattices, their start and end times, and their lattice 
+posterior probabilities. Keywords can be searched from the index with their corresponding syllable representation. 
+For multiword keywords, their representation would be the cross product of all the representations of each 
+component word.
+
+\section{Syllable Lattice Transduction for KWS}
+This method follows the syllable decoding procedure first, generating syllable lattices. 
+Instead of searching for keywords directly in subword lattices, we transduce syllable lattices 
+to word lattices, using G2S systems to produce syllable pronunciations for the OOV keywords. This method 
+has the advantage of using larger, less confusable units than phones for the decoding, and has a weak 
+LM because many syllable sequences are allowed within a language. For a number of OOV words, the
+pronunciation contains syllables which were not seen in the training data. For those OOV syllables 
+predicted by G2S system, we choose the perceptually nearest IV syllable to substitute for the OOV syllable. 
+The match requires that the vowel nucleus and the onset consonants match closely and the coda consonants 
+be nearest in place and manner of articulation, following the results of phone perceptual 
+experiments\cite{redford1999relative}.   
+
+\subsection{Syllable Decoding}
+\label{sec:syl_decode}
+To perform a syllable decoding, we substitute word transducers with syllable transducers in the standard
+word decoding graph generation
+\begin{equation}
+H \circ C \circ L_{phn2syl} \circ G_{syl}
+\end{equation}
+where $L_{phn2syl}$ denotes lexical transducer for syllable-phone pronunciations and $G_{syl}$ is syllable LM.
+
+$L_{phn2syl}$ can be easily constructed using a syllable lexicon given by experts. For syllable language model 
+$G_{syl}$, a simple way is decomposing words into syllable sequences using word to syllable lexicon. 
+As words may have several pronunciations, randomly picking might be needed. However, a more appropriate approach 
+is first aligning transcriptions with acoustics using trained acoustic models, and then mapping words 
+to syllable sequences that match phone alignments.
+
+With the resulting syllable transcription, we can build an n-gram language model and use it for decoding. 
+Note that in low-resources condition, syllable LMs tend to be better modeled by n-gram than word LMs 
+because the number of syllables is usually less than that of words, making training data relatively sufficient.
+
+\subsection{Grapheme-to-syllable prediction}
+Our pronunciation prediction utilizes the Phonetisaurus G2P system \cite{novak2012wfst} and trains on IV 
+pronunciations. This system itself is WFST-based, and predicts pronunciations based on a multigram alignment 
+between graphemes and phonemes. Our initial experiments aligning multiple character sequences to syllable 
+symbols proved that the space is too sparse to learn syllables directly. In order to utilize the better 
+accuracy of G2P when predicting syllables, we exploit the fact that Phonetisaurus is WFST-based, and 
+impose additional constraints on the output of the system to produce syllables. 
+
+For each language, we collect statistics over which phones can appear in onset, nucleus, or coda positions; 
+we also collect statistics over the different kinds of syllable structures (including frequency of onset 
+clusters or coda clusters). Then two transducers are created: one that maps phones to the same phone with 
+possible syllable positions, and another that maps the phone/syllable position pairs to the syllable 
+position.  We also create an acceptor that provides a unigram language model over valid syllable structures.
+When these three constraints are composed and realized as a phone to phone/syllable position pair transducer, 
+this can be used as a constraint to be composed with the original Phonetisaurus G2P system, but produces phones 
+annotated with syllable positions.  We can then read off the syllable structure of the  predicted phone 
+pronunciation easily.
+
+This G2S system described above can produce syllables that have not been seen before. 
+Once these OOV syllables have been found, it is necessary to find the perceptually 
+nearest IV syllable to be a proxy for them.  We use a syllable to phone system to 
+find the phone pronunciation of the OOV syllable and then match it to the pronunciations 
+of the IV syllables using a metric which weights the vowel identity highest, the onset 
+consonants the next highest and the coda consonants the lowest. This weighting is justified 
+by perceptual experiments which show humans perceive the vowel and prevocalic consonants 
+better than the postvocalic consonants\cite{redford1999relative}. As a first step, we only selected one IV 
+syllable per OOV syllable.
+
+\subsection{Syllable to Word Transduction}
+After generating syllable lattices, we can construct a syllable to word lexical transducer $L_{syl2wrd}$
+using the Babel lexicon (we will cover OOV part in next section) and then compose it with syllable lattices 
+to get word lattices. This last step concludes the lattice generation part, while for KWS, we need 
+one extra step (word alignment) to retrieve time information from composed word lattices.
+
+\subsection{Boosted Language Model}
+To better exploit the knowledge of keywords, a unigram language model is trained on all keywords and 
+then interpolated with original word language model. This boosted language model is compiled into 
+a grammar WFST and then composed with syllable to word lexical transducer. To use the composed lexical 
+transducer, we first remove language model scores in syllable lattices, and then perform transduction 
+to word lattices via composition, i.e.
+\begin{equation}
+\hat Lat_{syl} \circ L_{syl2wrd} \circ G_{boost}
+\end{equation}
+where $\hat Lat_{syl}$ denotes syllable lattices without language model score, $L_{syl2wrd}$ denotes 
+lexical transducer for word-syllable pronunciations and $G_{boost}$ is boosted LM.
+
+\section{The Babel Project}
+\subsection{Background}
+The Babel Program focuses on developing agile and robust speech recognition technology that can be 
+rapidly applied to any human language in order to provide effective search capability for analysts to 
+efficiently process massive amounts of real-world recorded speech \cite{babel}. It provides language packs 
+on several different minority languages. Each language pack contains a limited amount of training data 
+which has been transcribed at the word level and lexicons for words and syllables. The data is divided 
+into subsets called the full language pack (FLP) and the limited language pack (LLP) which have approximately 
+65 hours and 10 hours of training data respectively. Around 10 hours of development data are provided 
+for performance testing and parameter tuning. In addition, a evaluation set is provided for final 
+system evaluation, and around one third of the eval set, called eval-part1, is given for evaluation analysis.
+In this work, we used the LLP for training and eval-part1 for testing.
+
+In the BABEL project, performance evaluation is split into 3 stages:
+\begin{itemize}
+\item training stage (training data and development data is released and researchers begin building models 
+and tuning recognition parameters);
+\item ingestion stage (evaluation data is released and used for decoding);
+\item search stage (keywords are given and KWS is performed).
+\end{itemize}
+
+A so-called "No test audio re-use" (NTAR) condition requires no decoding operation be performed in search stage, 
+reducing the total amount of time it takes to perform KWS. Doing syllable decoding in the second stage and add in 
+OOV pronunciation before transduction allows the OOV words to be recognized in the third stage, while satisfying 
+the NTAR condition. OOVs are handled via G2S and a mapping procedure described as follows.
+
+\subsection{Languages}
+This work conducts experiments on 5 different languages: Assamese, Bengali, Creole, Zulu and Tamil.
+The version of the language packs are summarized in Table~\ref{tab:version}, and Table~\ref{tab:hours} records actual
+speech time (after segmentation).
+
+\begin{table}[!t]
+  \caption{Babel data for OP1 languages}
+  \label{tab:version}
+  \centering
+  \begin{tabular}{ccc}
+    \hline
+              & version & keyword list\\
+    \hline
+    Assamese  & IARPA-babel102b-v0.5a & conv-eval.kwlist4\\
+    Bengali   & IARPA-babel103b-v0.4b & conv-eval.kwlist4\\
+    Creole    & IARPA-babel201b-v0.2b & conv-eval.kwlist4\\
+    Zulu      & IARPA-babel206b-v0.1e & conv-eval.kwlist4\\
+    Tamil     & IARPA-babel204b-v1.1b & conv-eval.kwlist5\\
+    \hline
+  \end{tabular}
+\end{table}
+
+\begin{table}[!t]
+  \caption{Babel audio data in hours}
+  \label{tab:hours}
+  \centering
+  \begin{tabular}{cccc}
+    \hline
+              & LLP-training & dev & evalp1 \\
+    \hline
+    Assamese  & 10.03   & 8.67  & 3.69 \\
+    Bengali   & 10.32   & 8.83  & 4.81 \\
+    Creole    & 11.36   & 9.63  & 4.27 \\
+    Zulu      & 10.38   & 9.95  & 4.22 \\
+    Tamil     & 11.77   & 10.33 & 13.11 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsection{Statistics}
+Table~\ref{tab:stats} shows language pack and keyword list statistics. In general, \#Words-to\#Syls ratio is 
+between 2 to 10, and OOV rate varies from 16\% to 22\%\footnote{OOV are counted with regard to \texttt{eval-part1}}.
+
+\begin{table}[!t]
+  \caption{Statistics for language packs}
+  \label{tab:stats}
+  \centering
+  \begin{tabular}{ccccc}
+    \hline
+              & \#Words & \#Syls & \#KWs  & \#OOV KWs \\
+    \hline
+    Assamese  & 7661    & 1679   & 1608   & 259\\
+    Bengali   & 7933    & 2082   & 1594   & 283\\
+    Creole    & 4897    & 1981   & 1533   & 287\\
+    Zulu      & 13674   & 1345   & 1412   & 380\\
+    Tamil     & 14265   & 2620   & 2188   & 500\\
+    \hline
+  \end{tabular}
+\end{table}
+
+\section{Experiments}
+\subsection{Setup}
+The Kaldi toolkit\cite{povey2011kaldi} is used for the speech recognition part. 
+Standard 13-dim PLP feature, together with 3-dim Kaldi pitch feature \cite{ghahremani2014pitch}, 
+is extracted and used for maximum likelihood GMM model training. Features are then transformed 
+using LDA+MLLT before SAT training. With 'standard' GMM training recipe performed, a tanh-neuron 
+DNN-HMM hybrid system is trained using the same feature. Details of DNN training are documented in 
+section 2.2 in \cite{zhang2014improving}. The major difference between our setup and default Kaldi 
+setup is that we use word position-independent phones for acoustic models. This is necessary for syllable 
+transduction with word alignment because position-dependent phones would blow up the alignment 
+lexicon for lattice word alignment.
+
+\subsection{Syllable Decoding}
+To evaluate the performance of syllable decoding, we need to map transcriptions from word to syllables. Just as 
+described in Section~\ref{sec:syl_decode}, we force align transcriptions with the acoustic training data to reach a 
+more accurate result.
+
+Table~\ref{tab:SER} shows WERs of word decoding and Syllable Error Rates (SERs) of syllable decoding. 
+These two metrics are not comparable in general -- we present them here just for a quick reference. It is
+shown that syllable error rate is usually lower than word error rate, which is reasonable in that
+a correct word recognition requires all syllables within the word are correctly recognized.
+
+\begin{table}[!t]
+  \caption{Syllable Error Rates}
+  \label{tab:SER}
+  \centering
+  \begin{tabular}{ccc}
+    \hline
+              & WER  & SER  \\
+    \hline
+    Assamese  & 66.6 & 64.1 \\
+    Bengali   & 68.9 & 63.4 \\
+    Creole    & 61.6 & 57.3  \\
+    Zulu      & 71.5 & 73.7  \\
+    Tamil     & 79.0 & 77.9  \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsection{Grapheme to Syllable}
+G2S prediction is evaluated by comparing ground truth lexicon with predicted lexicon. BABEL language 
+pack provides a lexicon that covers more words than those appear in LLP. Since the G2S training only 
+uses pronunciations of words in LLP, all other words can serve as evaluation set. Table~\ref{tab:g2s} 
+shows the phone error rate (PER) and syllable error rate (SER) on that 'OOV' set (i.e. FLP v.s. LLP). Note 
+that the SER concept in this section is different from that in previous section.
+
+\begin{table}[h]
+  \caption{Pronunciation Prediction Error Rate}
+  \label{tab:g2s}
+  \centering
+  \begin{tabular}{ccc}
+    \hline
+                  & PER & SER \\
+    \hline
+    Assamese      & 7.0 & 18.7 \\
+    Bengali       & 9.7 & 25.2 \\
+    Creole        & 5.7 & 31.5 \\
+    Zulu          & 5.9 & 11.9 \\
+    Tamil         & 2.2 & 7.6 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+It is shown in Table~\ref{tab:g2s} that SERs for Creole and Bengali are quite high. Actually, those high
+SERs are mainly caused by mis-assign of phones to successive syllables, and these may not influence following 
+procedure much since syllable lattices may contain different assignments as well and may compensate for that.
+
+\subsection{Lattice Transduction}
+WER is used as a validation metric for lattice transduction. In this part, we do not use keyword boosted language 
+model as it is designed for KWS task rather than recognition. Table~\ref{tab:WER} shows WERs for baseline word 
+decoding and syllable transduction. It can be observed that transduced lattices have a higher word error 
+rate, which indicates word language models are still stronger than syllable ones in terms of word recognition.
+
+\begin{table}[!t]
+  \caption{WER with Lattice Transduction}
+  \label{tab:WER}
+  \centering
+  \begin{tabular}{ccc}
+    \hline
+              & WER     & S2W ER \\
+    \hline
+    Assamese  & 66.6    & 70.7 \\
+    Bengali   & 68.9    & 73.7 \\
+    Creole    & 61.6    & 67.1 \\
+    Zulu      & 71.5    & 77.5 \\
+    Tamil     & 79.0    & 81.0 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsection{Keyword Search}
+\subsubsection{IV Keyword Search}
+IV ATWV is also an important metric. Table~\ref{tab:ivatwv} 
+shows IV ATWV for baseline word system (Word), syllable search (SylS) and syllable transduction (SylT).
+\begin{table}[!t]
+  \caption{IV ATWV}
+  \label{tab:ivatwv}
+  \centering
+  \begin{tabular}{cccc}
+    \hline
+              & Word & SylS  & SylT  \\
+    \hline
+    Assamese  & 0.3064 & 0.2539 & 0.2958 \\
+    Bengali   & 0.3094 & 0.2523 & 0.2914 \\
+    Creole    & 0.3759 & 0.3367 & 0.3640 \\
+    Zulu      & 0.3139 & 0.2401 & 0.2572 \\
+    Tamil     & 0.2595 & 0.2123 & 0.2203 \\
+    \hline
+  \end{tabular}
+\end{table}
+It shows that the syllable transduction method gives reasonable IV ATWV, indicating that the 
+transduction method is effective in spotting both IV and OOV keywords.
+
+\subsubsection{OOV Keyword Search}
+Figure~\ref{fig:atwvoov} shows OOV ATWV for all 5 languages. We see that syllable transduction (SylT) 
+generally gives comparable results to the other two methods, i.e. phone confusion (PhoneConf) and syllable search (SylS).
+
+\begin{figure*}[!t]
+  \centering
+  \includegraphics[width=1.00\textwidth, height=0.25\textwidth]{histall.png}
+  \caption{OOV ATWV for different languages}
+  \label{fig:atwvoov}
+\end{figure*}
+
+To get a feeling for the characteristics of these three methods, we present miss rate and false alarm rate on Assamese
+in Table~\ref{tab:Miss}. It shows that the syllable transduction method tends to give lower false alarm rate, indicating
+more accurate hypotheses.
+\begin{table}[!t]
+  \caption{PMiss and PFA for Assamese}
+  \label{tab:Miss}
+  \centering
+  \begin{tabular}{cccc}
+    \hline
+              & PhoneConf & SylS  & SylT  \\
+    \hline
+    PMiss     & 0.853     & 0.827 & 0.859 \\
+    PFA       & 0.00006   & 0.00006 & 0.00003 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsubsection{Combination}
+Figure~\ref{fig:atwvoov} also shows the OOV ATWV on system combination. It is shown that system combination can effectively
+improves the OOV ATWV.
+
+\subsection{Analysis}
+The phone confusion method usually generates many more hypotheses than the other two methods, giving a higher hit rate as well as
+false alarm rate. The generated index file is usually much bigger than the other two methods, and it slows down the KWS. 
+In addition, it uses the dev set for confusion matrix estimation, which makes tuning of hyper-parameters a bit complicated.
+
+Syllable search usually generates a reasonable amount of hypotheses and gives good search results on OOV keywords. This
+method does not require post-processing for syllable lattices. On the other hand, searching syllables in lattices 
+usually takes more time than searching in word lattices, especially when lattices are dense.
+
+Compared with the above methods, syllable transduction usually gives fewer but more accurate hypotheses, and is good 
+at spotting both IV and OOV keywords. It has been shown that combination of a word system and a syllable transduction 
+system gives better results than combining the word system with syllable search \cite{hang2014syllable}. This method 
+also provides word lattices that are useful for OOV recognition. While it does not require any modification 
+of the KWS template, this method requires a G2S system and a boosted language model for better performance. 
+
+In general, these three methods combine well in terms of ATWV. This combination strategy does not require
+training multiple acoustic models, which reduces the training time and computation greatly.
 
 \section{Conclusion}
-The conclusion goes here.\cite{lidia2014effi}.
-
-
-% if have a single appendix:
-%\appendix[Proof of the Zonklar Equations]
-% or
-%\appendix  % for no appendix heading
-% do not use \section anymore after \appendix, only \section*
-% is possibly needed
-
-% use appendices with more than one appendix
-% then use \section to start each appendix
-% you must declare a \section before using any
-% \subsection or using \label (\appendices by itself
-% starts a section numbered zero.)
-%
-
-
-%\appendices
-%\section{Proof of the First Zonklar Equation}
-%Appendix one text goes here.
-
+We show that syllable transduction is helpful in handling OOVs in low resources KWS tasks. 
+Its good performance in both IV and OOV ATWV makes it a serious alternative to direct-searching in subword lattices. 
+A keyword boosted language model further improves ATWV by mixing in unigram trained from keywords. Future 
+work may benefit from improving syllable decoding accuracy, adding in more OOV pronunciations, and developing a
+composition algorithm that preserves time information in lattices.
 
 % use section* for acknowledgment
 \section*{Acknowledgment}
