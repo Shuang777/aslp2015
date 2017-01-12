@@ -64,258 +64,48 @@
 % *** CITATION PACKAGES ***
 %
 \usepackage{cite}
-% cite.sty was written by Donald Arseneau
-% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
-% \cite{} output to follow that of IEEE. Loading the cite package will
-% result in citation numbers being automatically sorted and properly
-% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
-% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
-% \cite will automatically add leading space, if needed. Use cite.sty's
-% noadjust option (cite.sty V3.8 and later) if you want to turn this off
-% such as if a citation ever needs to be enclosed in parenthesis.
-% cite.sty is already installed on most LaTeX systems. Be sure and use
-% version 5.0 (2009-03-20) and later if using hyperref.sty.
-% The latest version can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
-% The documentation is contained in the cite.sty file itself.
 
 
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
   \usepackage[pdftex]{graphicx}
-  % declare the path(s) where your graphic files are
-  % \graphicspath{{../pdf/}{../jpeg/}}
-  % and their extensions so you won't have to specify these with
-  % every instance of \includegraphics
-  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
 \else
   % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
   % will default to the driver specified in the system graphics.cfg if no
   % driver is specified.
-  % \usepackage[dvips]{graphicx}
+  \usepackage[dvips]{graphicx}
   % declare the path(s) where your graphic files are
   % \graphicspath{{../eps/}}
   % and their extensions so you won't have to specify these with
   % every instance of \includegraphics
   % \DeclareGraphicsExtensions{.eps}
 \fi
-% graphicx was written by David Carlisle and Sebastian Rahtz. It is
-% required if you want graphics, photos, etc. graphicx.sty is already
-% installed on most LaTeX systems. The latest version and documentation
-% can be obtained at: 
-% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
-% Another good source of documentation is "Using Imported Graphics in
-% LaTeX2e" by Keith Reckdahl which can be found at:
-% http://www.ctan.org/tex-archive/info/epslatex/
-%
-% latex, and pdflatex in dvi mode, support graphics in encapsulated
-% postscript (.eps) format. pdflatex in pdf mode supports graphics
-% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
-% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
-% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
-% which can result in "jaggedy"/blurry rendering of lines and letters as
-% well as large increases in file sizes.
-%
-% You can find documentation about the pdfTeX application at:
-% http://www.tug.org/applications/pdftex
-
-
-
 
 
 % *** MATH PACKAGES ***
 %
 \usepackage[cmex10]{amsmath}
-% A popular package from the American Mathematical Society that provides
-% many useful and powerful commands for dealing with mathematics. If using
-% it, be sure to load this package with the cmex10 option to ensure that
-% only type 1 fonts will utilized at all point sizes. Without this option,
-% it is possible that some math symbols, particularly those within
-% footnotes, will be rendered in bitmap form which will result in a
-% document that can not be IEEE Xplore compliant!
-%
-% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
-% thus preventing page breaks from occurring within multiline equations. Use:
-%\interdisplaylinepenalty=2500
-% after loading amsmath to restore such page breaks as IEEEtran.cls normally
-% does. amsmath.sty is already installed on most LaTeX systems. The latest
-% version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/required/amslatex/math/
-
-
-
-
-
-% *** SPECIALIZED LIST PACKAGES ***
-%
-%\usepackage{algorithmic}
-% algorithmic.sty was written by Peter Williams and Rogerio Brito.
-% This package provides an algorithmic environment fo describing algorithms.
-% You can use the algorithmic environment in-text or within a figure
-% environment to provide for a floating algorithm. Do NOT use the algorithm
-% floating environment provided by algorithm.sty (by the same authors) or
-% algorithm2e.sty (by Christophe Fiorio) as IEEE does not use dedicated
-% algorithm float types and packages that provide these will not provide
-% correct IEEE style captions. The latest version and documentation of
-% algorithmic.sty can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithms/
-% There is also a support site at:
-% http://algorithms.berlios.de/index.html
-% Also of interest may be the (relatively newer and more customizable)
-% algorithmicx.sty package by Szasz Janos:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/
-
-
-
-
-% *** ALIGNMENT PACKAGES ***
-%
-%\usepackage{array}
-% Frank Mittelbach's and David Carlisle's array.sty patches and improves
-% the standard LaTeX2e array and tabular environments to provide better
-% appearance and additional user controls. As the default LaTeX2e table
-% generation code is lacking to the point of almost being broken with
-% respect to the quality of the end results, all users are strongly
-% advised to use an enhanced (at the very least that provided by array.sty)
-% set of table tools. array.sty is already installed on most systems. The
-% latest version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/required/tools/
-
-
-% IEEEtran contains the IEEEeqnarray family of commands that can be used to
-% generate multiline equations as well as matrices, tables, etc., of high
-% quality.
-
-
 
 
 % *** SUBFIGURE PACKAGES ***
-%\ifCLASSOPTIONcompsoc
-%  \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
-%\else
-%  \usepackage[caption=false,font=footnotesize]{subfig}
-%\fi
-% subfig.sty, written by Steven Douglas Cochran, is the modern replacement
-% for subfigure.sty, the latter of which is no longer maintained and is
-% incompatible with some LaTeX packages including fixltx2e. However,
-% subfig.sty requires and automatically loads Axel Sommerfeldt's caption.sty
-% which will override IEEEtran.cls' handling of captions and this will result
-% in non-IEEE style figure/table captions. To prevent this problem, be sure
-% and invoke subfig.sty's "caption=false" package option (available since
-% subfig.sty version 1.3, 2005/06/28) as this is will preserve IEEEtran.cls
-% handling of captions.
-% Note that the Computer Society format requires a larger sans serif font
-% than the serif footnote size font used in traditional IEEE formatting
-% and thus the need to invoke different subfig.sty package options depending
-% on whether compsoc mode has been enabled.
-%
+\ifCLASSOPTIONcompsoc
+  \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\else
+  \usepackage[caption=false,font=footnotesize]{subfig}
+\fi
 % The latest version and documentation of subfig.sty can be obtained at:
 % http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
 
 
-
-
-% *** FLOAT PACKAGES ***
-%
-%\usepackage{fixltx2e}
-% fixltx2e, the successor to the earlier fix2col.sty, was written by
-% Frank Mittelbach and David Carlisle. This package corrects a few problems
-% in the LaTeX2e kernel, the most notable of which is that in current
-% LaTeX2e releases, the ordering of single and double column floats is not
-% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
-% single column figure to be placed prior to an earlier double column
-% figure. The latest version and documentation can be found at:
-% http://www.ctan.org/tex-archive/macros/latex/base/
-
-
-%\usepackage{stfloats}
-% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
-% the ability to do double column floats at the bottom of the page as well
-% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
-% LaTeX2e). It also provides a command:
-%\fnbelowfloat
-% to enable the placement of footnotes below bottom floats (the standard
-% LaTeX2e kernel puts them above bottom floats). This is an invasive package
-% which rewrites many portions of the LaTeX2e float routines. It may not work
-% with other packages that modify the LaTeX2e float routines. The latest
-% version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/sttools/
-% Do not use the stfloats baselinefloat ability as IEEE does not allow
-% \baselineskip to stretch. Authors submitting work to the IEEE should note
-% that IEEE rarely uses double column equations and that authors should try
-% to avoid such use. Do not be tempted to use the cuted.sty or midfloat.sty
-% packages (also by Sigitas Tolusis) as IEEE does not format its papers in
-% such ways.
-% Do not attempt to use stfloats with fixltx2e as they are incompatible.
-% Instead, use Morten Hogholm'a dblfloatfix which combines the features
-% of both fixltx2e and stfloats:
-%
-% \usepackage{dblfloatfix}
-% The latest version can be found at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/dblfloatfix/
-
-
-
-
-%\ifCLASSOPTIONcaptionsoff
-%  \usepackage[nomarkers]{endfloat}
-% \let\MYoriglatexcaption\caption
-% \renewcommand{\caption}[2][\relax]{\MYoriglatexcaption[#2]{#2}}
-%\fi
-% endfloat.sty was written by James Darrell McCauley, Jeff Goldberg and 
-% Axel Sommerfeldt. This package may be useful when used in conjunction with 
-% IEEEtran.cls'  captionsoff option. Some IEEE journals/societies require that
-% submissions have lists of figures/tables at the end of the paper and that
-% figures/tables without any captions are placed on a page by themselves at
-% the end of the document. If needed, the draftcls IEEEtran class option or
-% \CLASSINPUTbaselinestretch interface can be used to increase the line
-% spacing as well. Be sure and use the nomarkers option of endfloat to
-% prevent endfloat from "marking" where the figures would have been placed
-% in the text. The two hack lines of code above are a slight modification of
-% that suggested by in the endfloat docs (section 8.4.1) to ensure that
-% the full captions always appear in the list of figures/tables - even if
-% the user used the short optional argument of \caption[]{}.
-% IEEE papers do not typically make use of \caption[]'s optional argument,
-% so this should not be an issue. A similar trick can be used to disable
-% captions of packages such as subfig.sty that lack options to turn off
-% the subcaptions:
-% For subfig.sty:
-% \let\MYorigsubfloat\subfloat
-% \renewcommand{\subfloat}[2][\relax]{\MYorigsubfloat[]{#2}}
-% However, the above trick will not work if both optional arguments of
-% the \subfloat command are used. Furthermore, there needs to be a
-% description of each subfigure *somewhere* and endfloat does not add
-% subfigure captions to its list of figures. Thus, the best approach is to
-% avoid the use of subfigure captions (many IEEE journals avoid them anyway)
-% and instead reference/explain all the subfigures within the main caption.
-% The latest version of endfloat.sty and its documentation can obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/endfloat/
-%
-% The IEEEtran \ifCLASSOPTIONcaptionsoff conditional can also be used
-% later in the document, say, to conditionally put the References on a 
-% page by themselves.
-
-
-
-
 % *** PDF, URL AND HYPERLINK PACKAGES ***
 %
-%\usepackage{url}
+\usepackage{url}
 % url.sty was written by Donald Arseneau. It provides better support for
 % handling and breaking URLs. url.sty is already installed on most LaTeX
 % systems. The latest version and documentation can be obtained at:
 % http://www.ctan.org/tex-archive/macros/latex/contrib/url/
 % Basically, \url{my_url_here}.
-
-
-
-
-% *** Do not adjust lengths that control margins, column widths, etc. ***
-% *** Do not use packages that alter fonts (such as pslatex).         ***
-% There should be no need to do such things with IEEEtran.cls V1.6 and later.
-% (Unless specifically asked to do so by the journal or conference you plan
-% to submit to, of course. )
 
 
 % correct bad hyphenation here
@@ -635,18 +425,24 @@ The version of the language packs are summarized in Table~\ref{tab:version}, and
 speech time (after segmentation).
 
 \begin{table}[!t]
-  \caption{Babel data for OP1 languages}
+  \caption{Babel data for phase 1 and 2}
   \label{tab:version}
   \centering
-  \begin{tabular}{ccc}
+  \begin{tabular}{|c|c|c|c|}
     \hline
-              & version & keyword list\\
+    & id  & version & keyword list\\
     \hline
-    Assamese  & IARPA-babel102b-v0.5a & conv-eval.kwlist4\\
-    Bengali   & IARPA-babel103b-v0.4b & conv-eval.kwlist4\\
-    Creole    & IARPA-babel201b-v0.2b & conv-eval.kwlist4\\
-    Zulu      & IARPA-babel206b-v0.1e & conv-eval.kwlist4\\
-    Tamil     & IARPA-babel204b-v1.1b & conv-eval.kwlist5\\
+    Cantonese & 101 & IARPA-babel101b-v0.4c & conv-eval.kwlist \\
+    Assamese  & 102 & IARPA-babel102b-v0.5a & conv-eval.kwlist4 \\
+    Bengali   & 103 & IARPA-babel103b-v0.4b & conv-eval.kwlist4 \\
+    Pashto    & 104 & IARPA-babel104b-v0.4bY & conv-eval.kwlist2 \\
+    Turkish   & 105 & IARPA-babel105b-v0.4 &  conv-eval.kwlist2 \\
+    Tagalog   & 106 & IARPA-babel106b-v0.2g & conv-eval.kwlist2 \\
+    Vietnamese & 107 & IARPA-babel107b-v0.7 & conv-eval.kwlist3 \\
+    Creole    & 201 & IARPA-babel201b-v0.2b & conv-eval.kwlist4 \\
+    Lao       & 203 & IARPA-babel203b-v3.1a & conv-eval.kwlist4 \\
+    Tamil     & 204 & IARPA-babel204b-v1.1b & conv-eval.kwlist5 \\
+    Zulu      & 206 & IARPA-babel206b-v0.1e & conv-eval.kwlist4 \\
     \hline
   \end{tabular}
 \end{table}
@@ -655,15 +451,21 @@ speech time (after segmentation).
   \caption{Babel audio data in hours}
   \label{tab:hours}
   \centering
-  \begin{tabular}{cccc}
+  \begin{tabular}{|c|c|c|c|}
     \hline
               & LLP-training & dev & evalp1 \\
     \hline
-    Assamese  & 10.03   & 8.67  & 3.69 \\
-    Bengali   & 10.32   & 8.83  & 4.81 \\
-    Creole    & 11.36   & 9.63  & 4.27 \\
-    Zulu      & 10.38   & 9.95  & 4.22 \\
-    Tamil     & 11.77   & 10.33 & 13.11 \\
+    Cantonese & 17.82 & 8.32 & 4.64 \\
+    Assamese  & 9.96  & 7.85 & 4.09 \\
+    Bengali   & 10.27 & 9.13 & 4.82 \\
+    Pashto    & 9.86  & 8.96 & 4.44 \\
+    Turkish   & 9.85  & 8.40 & 4.45 \\
+    Tagalog   & 10.56 & 8.49 & 4.44 \\
+    Vietnamese& 10.92 & 8.36 & 12.26 \\
+    Creole    & 11.30 & 8.46 & 4.33 \\
+    Lao       & 10.45 & 7.82 & 4.20 \\
+    Tamil     & 11.71 & 8.34 & 12.52 \\
+    Zulu      & 10.33 & 8.66 & 4.35 \\
     \hline
   \end{tabular}
 \end{table}
@@ -676,15 +478,21 @@ between 2 to 10, and OOV rate varies from 16\% to 22\%\footnote{OOV are counted 
   \caption{Statistics for language packs}
   \label{tab:stats}
   \centering
-  \begin{tabular}{ccccc}
+  \begin{tabular}{|c|c|c|c|c|c|}
     \hline
-              & \#Words & \#Syls & \#KWs  & \#OOV KWs \\
+    & \#Words & \#Syls & \#Units(Phns) & \#KWs & \#OOV KWs \\
     \hline
-    Assamese  & 7661    & 1679   & 1608   & 259\\
-    Bengali   & 7933    & 2082   & 1594   & 283\\
-    Creole    & 4897    & 1981   & 1533   & 287\\
-    Zulu      & 13674   & 1345   & 1412   & 380\\
-    Tamil     & 14265   & 2620   & 2188   & 500\\
+    Cantonese & 5981    & 1356   & 224(41)    &  2645 & 1351 \\
+    Assamese  & 8271    & 1686   & 60(54)     &  2378 & 661 \\
+    Bengali   & 9178    & 2089   & 62(57)     &  2645 & 747 \\
+    Pashto    & 8217    & 3352   & 130(48)    &  2995 & 916 \\
+    Turkish   & 12086   & 2708   & 93(46)     &  2922 & 1217 \\
+    Tagalog   & 8731    & 3448   & 140(52)    &  3407 & 1704 \\
+    Vietnamese& 4425    & 3859   & 244(45)    &  2587 & 690 \\
+    Creole    & 4829    & 1988   & 43(36)     &  2037 & 751 \\
+    Lao       & 4194    & 2417   & 254(46)    &  1819 & 409 \\
+    Tamil     & 18605   & 2627   & 43(38)     &  3768 & 1449 \\
+    Zulu      & 13964   & 1352   & 93(45)     &  2703 & 1013 \\
     \hline
   \end{tabular}
 \end{table}
@@ -711,23 +519,6 @@ These two metrics are not comparable in general -- we present them here just for
 shown that syllable error rate is usually lower than word error rate, which is reasonable in that
 a correct word recognition requires all syllables within the word are correctly recognized.
 
-\begin{table}[!t]
-  \caption{Syllable Error Rates}
-  \label{tab:SER}
-  \centering
-  \begin{tabular}{ccc}
-    \hline
-              & WER  & SER  \\
-    \hline
-    Assamese  & 66.6 & 64.1 \\
-    Bengali   & 68.9 & 63.4 \\
-    Creole    & 61.6 & 57.3  \\
-    Zulu      & 71.5 & 73.7  \\
-    Tamil     & 79.0 & 77.9  \\
-    \hline
-  \end{tabular}
-\end{table}
-
 \subsection{Grapheme to Syllable}
 G2S prediction is evaluated by comparing ground truth lexicon with predicted lexicon. BABEL language 
 pack provides a lexicon that covers more words than those appear in LLP. Since the G2S training only 
@@ -735,22 +526,28 @@ uses pronunciations of words in LLP, all other words can serve as evaluation set
 shows the phone error rate (PER) and syllable error rate (SER) on that 'OOV' set (i.e. FLP v.s. LLP). Note 
 that the SER concept in this section is different from that in previous section.
 
-\begin{table}[h]
+\begin{table*}[t]
   \caption{Pronunciation Prediction Error Rate}
   \label{tab:g2s}
   \centering
-  \begin{tabular}{ccc}
+  \begin{tabular}{|c|c|c|c|c|}
     \hline
-                  & PER & SER \\
+    & OOVs &  G2P PER & G2S (PER / SER) & G2SC (PER / SER / SER w mapping) \\
     \hline
-    Assamese      & 7.0 & 18.7 \\
-    Bengali       & 9.7 & 25.2 \\
-    Creole        & 5.7 & 31.5 \\
-    Zulu          & 5.9 & 11.9 \\
-    Tamil         & 2.2 & 7.6 \\
+    Cantonese     & 10679 & 6.2  & 5.9 / 7.2      & 8.9 / 17.6 / 9.3 \\
+    Assamese      & 14368 & 4.8  & 14.9 / 35.2    & 4.7 / 15.1 / 16.8 \\
+    Bengali       & 16394 & 4.7  & 35.7 / 69.5    & 4.0 / 13.2 / 15.6 \\
+    Pashto        & 11454 & 32.2 & 46.5 / 67.8    & 34.4 / 53.8 / 53.5 \\
+    Turkish       & 27918 & 21.2 & 61.0 / 93.2    & 24.1 / 32.4 / 31.5 \\
+    Tagalog       & 15188 & 28.2 & 73.3 / 99.6    & 27.2 / 35.5 / 35.9 \\
+    Vietnamese    & 2366  & 25.4 & 106.3 / 194.3  & 26.1 / 89.2 / 109.9 \\
+    Creole        & 7849  & 2.0  & 47.6 / 119.4   & 1.9 / 22.6 / 29.6 \\
+    Lao           & 2954  & 21.2 & 146.2 / 200.0  & 50.8 / 63.9 / 64.7 \\
+    Tamil         & 38097 & 0.6  & 30.3 / 64.3    & 5.1 / 12.3 / 13.4 \\
+    Zulu          & 40339 & 19.0 & 43.4 / 59.0    & 20.3 / 32.4 / 32.4 \\
     \hline
   \end{tabular}
-\end{table}
+\end{table*}
 
 It is shown in Table~\ref{tab:g2s} that SERs for Creole and Bengali are quite high. Actually, those high
 SERs are mainly caused by mis-assign of phones to successive syllables, and these may not influence following 
@@ -766,39 +563,55 @@ rate, which indicates word language models are still stronger than syllable ones
   \caption{WER with Lattice Transduction}
   \label{tab:WER}
   \centering
-  \begin{tabular}{ccc}
+  \begin{tabular}{|c|c|c|}
     \hline
               & WER     & S2W ER \\
     \hline
-    Assamese  & 66.6    & 70.7 \\
-    Bengali   & 68.9    & 73.7 \\
-    Creole    & 61.6    & 67.1 \\
-    Zulu      & 71.5    & 77.5 \\
-    Tamil     & 79.0    & 81.0 \\
+    Cantonese & 54.4    & 64.3 \\
+    Assamese  & 66.7    & 71.7 \\
+    Bengali   & 68.7    & 74.5 \\
+    Pashto    & 63.2    & 67.6 \\
+    Turkish   & 66.2    & 69.8 \\
+    Tagalog   & 62.9    & 71.0 \\
+    Vietnamese & 64.8   & 70.5 \\
+    Creole    & 62.4    & 68.6 \\
+    Lao       & 62.0    & 64.8 \\
+    Tamil     & 78.2    & 80.5 \\
+    Zulu      & 71.2    & 78.0 \\
     \hline
   \end{tabular}
 \end{table}
 
 \subsection{Keyword Search}
+
+\begin{table*}[t]
+  \caption{dev set}
+  \label{tab:devatwv}
+  \centering
+  \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+              & Word & SylS  & SylT & SylG & G2P decoding \\
+    \hline
+    Cantonese & 0.3350 / 0.0000 / 0.2792 & 0.3214 / 0.2063 / 0.3022 & 0.3185 / 0.2071 / 0.2999 & 0.3478 / 0.2222 / 0.3269 & 0.3533 / 0.2934 / 0.3433 \\
+    Assamese  & 0.2275 / 0.0000 / 0.1979 & 0.1963 / 0.0157 / 0.1728 & 0.2293 / 0.0514 / 0.2061 & 0.2389 / 0.0510 / 0.2145 & 0.2482 / 0.1736 / 0.2385 \\
+    Bengali   & 0.2402 / 0.0000 / 0.2072 & 0.2083 / 0.0766 / 0.1902 & 0.2338 / 0.1116 / 0.2170 & 0.2610 / 0.1055 / 0.2397 & 0.2519 / 0.2194 / 0.2475 \\
+    Pashto    & 0.2679 / 0.0000 / 0.2284 & 0.2481 / 0.0283 / 0.2157 & 0.2542 / 0.0513 / 0.2243 & 0.2788 / 0.0461 / 0.2445 & 0.2842 / 0.2374 / 0.2773 \\
+    Turkish   & 0.2631 / 0.0000 / 0.2024 & 0.2386 / 0.0948 / 0.2054 & 0.2347 / 0.1041 / 0.2046 & 0.2489 / 0.0984 / 0.2142 & 0.2733 / 0.2386 / 0.2653 \\
+    Tagalog   & 0.3590 / 0.0000 / 0.2536 & 0.2925 / 0.1339 / 0.2459 & 0.3008 / 0.1444 / 0.2548 & 0.3206 / 0.1582 / 0.2730 & 0.3699 / 0.2916 / 0.3469 \\
+    Vietnamese& 0.2047 / 0.0000 / 0.1785 & 0.2356 / 0.0114 / 0.2069 & 0.2371 / 0.0193 / 0.2093 & 0.2284 / 0.0193 / 0.2017 & 0.2406 / 0.0917 / 0.2215 \\
+    Creole    & 0.3243 / 0.0000 / 0.2963 & 0.3028 / 0.1622 / 0.2906 & 0.3118 / 0.1769 / 0.3001 & 0.3298 / 0.1983 / 0.3184 & 0.3510 / 0.3600 / 0.3517 \\
+    Lao       & 0.3109 / 0.0000 / 0.2860 & 0.3203 / 0.0333 / 0.2974 & 0.3206 / 0.0251 / 0.2969 & 0.3294 / 0.0309 / 0.3056 & 0.3271 / 0.2059 / 0.3174 \\
+    Tamil     & 0.2139 / 0.0000 / 0.1752 & 0.1848 / 0.0532 / 0.1610 & 0.2038 / 0.0704 / 0.1797 & 0.2154 / 0.0673 / 0.1886 & 0.2338 / 0.1561 / 0.2198 \\
+    Zulu      & 0.2968 / 0.0000 / 0.2297 & 0.2488 / 0.2029 / 0.2384 & 0.2580 / 0.2059 / 0.2462 & 0.2801 / 0.2228 / 0.2671 & 0.3210 / 0.2846 / 0.3128 \\
+    \hline
+  \end{tabular}
+\end{table*}
+
+
 \subsubsection{IV Keyword Search}
 IV ATWV is also an important metric. Table~\ref{tab:ivatwv} 
 shows IV ATWV for baseline word system (Word), syllable search (SylS) and syllable transduction (SylT).
-\begin{table}[!t]
-  \caption{IV ATWV}
-  \label{tab:ivatwv}
-  \centering
-  \begin{tabular}{cccc}
-    \hline
-              & Word & SylS  & SylT  \\
-    \hline
-    Assamese  & 0.3064 & 0.2539 & 0.2958 \\
-    Bengali   & 0.3094 & 0.2523 & 0.2914 \\
-    Creole    & 0.3759 & 0.3367 & 0.3640 \\
-    Zulu      & 0.3139 & 0.2401 & 0.2572 \\
-    Tamil     & 0.2595 & 0.2123 & 0.2203 \\
-    \hline
-  \end{tabular}
-\end{table}
+
 It shows that the syllable transduction method gives reasonable IV ATWV, indicating that the 
 transduction method is effective in spotting both IV and OOV keywords.
 
